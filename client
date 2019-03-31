@@ -1,0 +1,17 @@
+# sysctl net.inet.ip.forwarding
+# sysctl -w net.inet.ip.forwarding=1
+
+net.inet.ip.forwarding=1
+
+map ppp0 192.168.1.0/24 -> 0/32 proxy port ftp ftp/tcp
+map ppp0 192.168.1.0/24 -> 0/32 portmap tcp/udp 40000:60000
+map ppp0 192.168.1.0/24 -> 0/32
+
+#!/bin/sh
+# /etc/ppp/ip-up
+/etc/rc.d/ipnat forcestart
+
+#!/bin/sh
+# /etc/ppp/ip-down
+/etc/rc.d/ipnat forcestop
+
